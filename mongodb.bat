@@ -1,0 +1,1 @@
+"C:\Program Files\MongoDB\Server\3.2\bin\mongod" --dpath "C:\Users\Administrator\Documents\GitHub\pro280Group_\data"
