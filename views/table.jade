@@ -1,0 +1,60 @@
+doctype
+html
+    head
+        link( rel='stylesheet', href='style.css')
+        title= 'Person Database'
+        script(src="/Scripts/Canvas.js")
+    body
+        h3 Main Page:
+        a(class='button', href='../logout') Logout
+        a(class='button', href='../create') Create
+        div(class='ctable')
+            h3 Black Cards
+            table
+                thead
+                    tr
+                        th Id
+                        th Text
+                        th Date Created
+                        th Date Updated
+                        th Edit
+                        th Delete
+                tbody
+                    each bc in black
+                        tr
+                            td
+                                |#{bc._id}
+                            td
+                                |#{bc.text}
+                            td
+                                |#{bc.created_on.toString()}
+                            td
+                                |#{bc.update_on.toString()}
+                            td 
+                                a(href='/edit/#{p._id.toString()}' ) Edit
+                            td
+                                a(href='/remove/#{p._id.toString()}') Remove
+        div(class='ctable')
+            h3 White Cards
+            table  
+                thead
+                    tr 
+                        th Id
+                        th Text
+                tbody
+                    each wc in white
+                        tr
+                            td
+                                |#{bc._id}
+                            td
+                                |#{bc.text}
+                            td
+                                |#{bc.created_on.toString()}
+                            td
+                                |#{bc.update_on.toString()}
+                            td 
+                                a(href='/edit/#{p._id.toString()}' ) Edit
+                            td
+                                a(href='/remove/#{p._id.toString()}') Remove
+                                
+                        

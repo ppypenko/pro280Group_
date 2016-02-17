@@ -1,67 +1,32 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/data');
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'conection error:'));
-db.once('open', function (callback) {
-
-});
-var blackCardSchema = mongoose.Schema({
-    text: String
-});
-var whiteCardSchema = mongoose.Schema({
-    text: String
-});
-var Black = mongoose.model('Black', blackCardSchema),
-    White = mongoose.model('White', whiteCardSchema);
-
-exports.createDB = function () {
-
-};
-exports.createCard = function (req, res) {
-    var i = {};
-    if (req.body.color === "black") {
-        i = new Black({
-            text: req.body.text
-        });
-    } else {
-        i = new White({
-            text: req.body.text
-        });
-    }
-    i.save(new function (err, target) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(target);
-        }
+var express = require('express'),
+    jade = require('jade'),
+    path = require('path'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    expressSession = require('express-session'),
+    app = express(),
+    route = require('./routes/database.js'),
+    urlParser = bodyParser.urlencoded({
+        extended: false
     });
 
-};
-exports.editCard = function (req, res) {
-    if (req.params.color === "black") {
-        Black.findOne({
-            _id: req.params.id
-        }, function (err, black) {
-            if (err) return console.error(err);
-            black.text = req.params.text;
-            black.save();
-        });
-    } else {
-        White.findOne({
-            _id: req.params.id
-        }, function (err, black) {
-            if (err) return console.error(err);
-            black.text = req.params.text;
-            black.save();
-        });
-    }
-};
+app.set('view engine', 'jade');
+app.set('views', __dirname + '/views');
+app.use(express.static(path.join(__dirname + '/public')));
+app.use(cookieParser());
+app.use(expressSession({
+    secret: "secret",
+    saveUninitialized: true,
+    resave: true
+}));
 
-function writeToFile(obj) {
 
-}
 
-function createDB() {
 
-}
+
+
+
+
+
+//-----------------last line of code below----------------------------
+app.listen(3000);

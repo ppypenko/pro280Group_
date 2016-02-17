@@ -1,0 +1,21 @@
+doctype
+html
+    head
+        link( rel='stylesheet', href='style.css')
+        title='Login'
+    body
+        h3 Login Page:
+        form(method='post', action='/register')
+            label(for='username') Username
+            br
+            input(name='username')
+            br
+            label(for='password') Password
+            br
+            input(name='password', type='password')
+            br
+            label(for='verify') Password
+            br
+            input(name='verify', type='password')
+            br
+            input(type='submit', value='Login')

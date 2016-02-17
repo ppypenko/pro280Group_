@@ -1,0 +1,19 @@
+doctype
+html
+    head
+        link( rel='stylesheet', href='style.css')
+        title= 'Create Card'
+    body
+        h3 Create Person Page:
+        form(id='form', method='post', action='/create')
+            label(for='ctype') Color
+            br
+            select(name='ctype', id='colorType')
+                option(value='Black') Black
+                option(value='White') White
+            br
+            label(for='msg') Text
+            br
+            input(type='text', id='msg', name='msgText')
+            br
+            input(type='submit', value='Update')

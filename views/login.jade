@@ -1,0 +1,17 @@
+doctype
+html
+    head
+        link( rel='stylesheet', href='style.css')
+        title='Login'
+    body
+        h3 Login Page:
+        form(method='post', action='/login')
+            label(for='username') Username
+            br
+            input(id='username')
+            br
+            label(for='password') Password
+            br
+            input(id='password', type='text')
+            br
+            input(type='submit', value='Login')
