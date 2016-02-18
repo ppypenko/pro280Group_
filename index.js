@@ -5,7 +5,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     expressSession = require('express-session'),
     app = express(),
-    route = require('./routes/database.js'),
+    database = require('./routes/database.js'),
+    route = require('./routes/routes.js'),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
@@ -20,10 +21,13 @@ app.use(expressSession({
     resave: true
 }));
 
+//app.get('/', function (req, res) {
+//    res.render('table');
+//});
 
 
-
-
+app.get('/table', database.cardTable);
+app.get('/create', route.createCardPage);
 
 
 

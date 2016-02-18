@@ -5,9 +5,9 @@ html
         title= 'Edit Card'
     body
         h3 Edit Card:
-        form(id='form', method='post', action='/edit/#{person.id}')
+        form(id='form', method='post', action='/edit/#{card.id}')
             label(for='msg') Text
             br
-            input(type='text', id='msg', name='msgType', value='#{card.text}')
+            textarea(type='text', rows='10', cols='100' id='msg', name='msgText')
             br
             input(type='submit', value='Update')

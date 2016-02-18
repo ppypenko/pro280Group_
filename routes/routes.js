@@ -1,3 +1,6 @@
+"use strict";
+var data = require('./database.js');
+
 exports.cardTablePage = function (req, res) {
 
 };

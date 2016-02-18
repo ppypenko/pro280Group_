@@ -1,3 +1,4 @@
+"use strict";
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/data');
 
@@ -6,61 +7,63 @@ db.on('error', console.error.bind(console, 'conection error:'));
 db.once('open', function (callback) {
 
 });
-var blackCardSchema = mongoose.Schema({
-    text: String
+var cardSchema = mongoose.Schema({
+    color: String,
+    text: String,
+    created_on: Date,
+    update_on: Date
 });
-var whiteCardSchema = mongoose.Schema({
-    text: String
-});
-var Black = mongoose.model('Black', blackCardSchema),
-    White = mongoose.model('White', whiteCardSchema);
 
+var Card = mongoose.model('Card', cardSchema);
+
+exports.cardTable = function (req, res) {
+    Card.find(function (err, card) {
+        res.render('cardTable', {
+            card: card
+        });
+    });
+};
 
 exports.createCard = function (req, res) {
-    var i = {};
-    if (req.body.color === "black") {
-        i = new Black({
-            text: req.body.text
-        });
-    } else {
-        i = new White({
-            text: req.body.text
-        });
-    }
-    i.save(new function (err, target) {
+    var i = new Card({
+        color: req.body.color,
+        text: req.body.text
+    });
+    i.save(function (err, target) {
         if (err) {
             console.log(err);
         } else {
             console.log(target);
         }
     });
-
+    res.redirect('/cardTable');
 };
 exports.editCard = function (req, res) {
-    if (req.params.color === "black") {
-        Black.findOne({
-            _id: req.params.id
-        }, function (err, black) {
-            if (err) return console.error(err);
-            black.text = req.params.text;
-            black.save();
-        });
-    } else {
-        White.findOne({
-            _id: req.params.id
-        }, function (err, black) {
-            if (err) return console.error(err);
-            black.text = req.params.text;
-            black.save();
-        });
-    }
+    Card.findone({
+        _id: req.params.id
+    }, function (err, card) {
+        if (err) {
+            console.log(err);
+        } else {
+            card.text = req.params.cardColor;
+            card.save();
+        }
+    });
+    res.redirect('/cardTable');
 };
 exports.removeCard = function (req, res) {
-
+    Card.findOneAndRemove({
+        _id: req.params.id
+    }, function (err, card) {
+        if (err) {
+            throw err;
+        }
+        console.log('Deleted card');
+        console.log(card);
+    });
+    res.redirect('/cardTable');
 };
-exports.createDB = function () {
 
-};
 
 function writeToFile(obj) {
 
