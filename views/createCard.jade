@@ -6,14 +6,14 @@ html
     body
         h3 Create New Card
         form(id='form', method='post', action='/create')
-            label(for='ctype') Color Type
+            label(for='colorType') Color Type
             br
             select(name='cardType', id='colorType')
                 option(value='Black') Black
                 option(value='White') White
             br
-            label(for='msg') Text
+            label(for='msg') Text for card. Max 1000 characters
             br
             textarea(type='text', rows='10', cols='100' id='msg', name='msgText')
             br
-            input(type='submit', value='Update')
+            input(type='submit', value='Create')

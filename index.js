@@ -28,7 +28,10 @@ app.use(expressSession({
 
 app.get('/table', database.cardTable);
 app.get('/create', route.createCardPage);
-
+app.post('/create', urlParser, database.createCard);
+app.get('/edit/:id', urlParser, database.editCardPage);
+app.post('/edit/:id', urlParser, database.editCard);
+app.get('/remove/:id', database.removeCard);
 
 
 

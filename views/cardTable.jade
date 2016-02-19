@@ -14,6 +14,7 @@ html
                 thead
                     tr
                         th Id
+                        th Type
                         th Text
                         th Date Created
                         th Date Updated
@@ -25,13 +26,15 @@ html
                             td
                                 |#{bc._id}
                             td
+                                |#{bc.color}
+                            td
                                 |#{bc.text}
                             td
                                 |#{bc.created_on.toString()}
                             td
                                 |#{bc.update_on.toString()}
-//                            td 
-//                                a(href='/edit/#{bc._id.toString()}' ) Edit
-//                            td
-//                                a(href='/remove/#{bc._id.toString()}') Remove
+                            td 
+                                a(href='/edit/#{bc._id.toString()}' ) Edit
+                            td
+                                a(href='/remove/#{bc._id.toString()}') Remove
                      

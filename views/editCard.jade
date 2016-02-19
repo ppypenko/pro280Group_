@@ -4,10 +4,10 @@ html
         link( rel='stylesheet', href='/style.css')
         title= 'Edit Card'
     body
-        h3 Edit Card:
+        h3 Edit Card: #{card.id}
         form(id='form', method='post', action='/edit/#{card.id}')
             label(for='msg') Text
             br
-            textarea(type='text', rows='10', cols='100' id='msg', name='msgText')
+            textarea(type='text', rows='10', cols='100' id='msg', name='msgText') #{card.text}
             br
-            input(type='submit', value='Update')
+            input(type='submit', value='Edit')

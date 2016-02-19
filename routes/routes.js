@@ -13,9 +13,7 @@ exports.forumPage = function (req, res) {
 exports.forumTablePage = function (req, res) {
 
 };
-exports.editCardPage = function (req, res) {
-    res.render('editCard');
-};
+
 exports.createCardPage = function (req, res) {
     res.render('createCard');
 };
