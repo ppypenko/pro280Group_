@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/data');
 
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'conection error:'));
+db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
 
 });
@@ -89,6 +89,17 @@ function writeToFile(obj) {
 
 }
 
-function createDB() {
-    console.log("populate");
+exports.createDB = function () {
+    Card.count(function (err, count) {
+        if (!err && count === 0) {
+            //            var e = JSON.parse("./Card.json");
+            //            console.log(e);
+
+
+            //            for (i = 0; i < jsonCardFile.length; i += 1) {
+            //                console.log(jsonCardFile[i]);
+            //                //new Card(jsonCardFile[i]).save();
+            //            }
+        }
+    });
 }

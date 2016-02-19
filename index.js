@@ -10,7 +10,7 @@ var express = require('express'),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
-
+database.createDB();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
