@@ -1,5 +1,7 @@
 "use strict";
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    fs = require('fs'),
+    data = {};
 mongoose.connect('mongodb://localhost/data');
 
 var db = mongoose.connection;
@@ -84,22 +86,28 @@ exports.removeCard = function (req, res) {
     res.redirect('/table');
 };
 
-
-function writeToFile(obj) {
-
-}
-
 exports.createDB = function () {
     Card.count(function (err, count) {
         if (!err && count === 0) {
-            //            var e = JSON.parse("./Card.json");
-            //            console.log(e);
-
-
-            //            for (i = 0; i < jsonCardFile.length; i += 1) {
-            //                console.log(jsonCardFile[i]);
-            //                //new Card(jsonCardFile[i]).save();
-            //            }
+            var contents = fs.readFileSync("./routes/Card.json"),
+                a = 0;
+            data = JSON.parse(contents);
+            for (a = 0; a < data.cards.length; a += 1) {
+                var i = new Card({
+                    color: data.cards[a].color,
+                    text: data.cards[a].text,
+                    created_on: new Date(),
+                    update_on: new Date()
+                });
+                i.save(function (err, target) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(target);
+                    }
+                });
+            }
         }
     });
-}
+
+};

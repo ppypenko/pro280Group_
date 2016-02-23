@@ -10,7 +10,6 @@ var express = require('express'),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
-database.createDB();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
@@ -21,9 +20,7 @@ app.use(expressSession({
     resave: true
 }));
 
-//app.get('/', function (req, res) {
-//    res.render('table');
-//});
+database.createDB();
 
 
 app.get('/table', database.cardTable);
