@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express'),
     jade = require('jade'),
     path = require('path'),
@@ -10,6 +11,9 @@ var express = require('express'),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
+exports.getApp = function () {
+    return app;
+};
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
@@ -33,4 +37,5 @@ app.get('/remove/:id', database.removeCard);
 
 
 //-----------------last line of code below----------------------------
-app.listen(3000);
+//app.listen(3000);
+var io - require('socket.io').listen(app.listen(3000));

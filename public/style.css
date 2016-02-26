@@ -3,6 +3,16 @@
     margin-right: auto;
 }
 
+table {
+    padding: 5px;
+    border: 2px solid black;
+}
+
+td {
+    padding: 5px;
+    border: 2px solid black;
+}
+
 body {
     background-color: grey;
 }
