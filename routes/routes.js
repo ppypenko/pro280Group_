@@ -2,16 +2,25 @@
 var data = require('./database.js');
 
 exports.cardTablePage = function (req, res) {
-
+    res.render('cardTable');
 };
 exports.mainPage = function (req, res) {
-
+    res.render('main');
 };
-exports.forumPage = function (req, res) {
 
+exports.signUpPage = function (req, res) {
+    res.render('register');
+};
+exports.loginPage = function (req, res) {
+    res.render('login');
+};
+
+//must adjust the following methods for their page.
+exports.forumPage = function (req, res) {
+    res.render('main');
 };
 exports.forumTablePage = function (req, res) {
-
+    res.render('main');
 };
 
 exports.createCardPage = function (req, res) {
