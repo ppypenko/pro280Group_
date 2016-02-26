@@ -1,6 +1,5 @@
 "use strict";
-var mongoose = require('mongoose'),
-    fs = require('fs');
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/data');
 
 var db = mongoose.connection;
@@ -17,36 +16,28 @@ var cardSchema = mongoose.Schema({
 
 var Card = mongoose.model('Card', cardSchema);
 
-exports.cardTable = function (req, res) {
-    Card.find(function (err, card) {
+exports.cardTable = function () {
+    var query = Card.find(function (err, card) {
         if (card.count === 0) {
             console.log("empty");
         }
-        res.render('cardTable', {
-            card: card
-        });
     });
+    return query;
 };
-exports.editCardPage = function (req, res) {
-    Card.findOne({
-        _id: req.params.id
+exports.editCardPage = function (id) {
+    var query = Card.findOne({
+        _id: id
     }, function (err, found) {
         if (err) {
             console.error(err);
-        } else {
-            res.render('editCard', {
-                card: {
-                    id: found.id,
-                    text: found.text
-                }
-            });
         }
     });
+    return query;
 };
-exports.createCard = function (req, res) {
+exports.createCard = function (body) {
     var i = new Card({
-        color: req.body.cardType,
-        text: req.body.msgText,
+        color: body.cardType,
+        text: body.msgText,
         created_on: new Date(),
         update_on: new Date()
     });
@@ -57,33 +48,24 @@ exports.createCard = function (req, res) {
             console.log(target);
         }
     });
-    Card.find(function (err, card) {
-        if (card.count === 0) {
-            console.log("empty");
-        }
-        res.render('cardTable', {
-            card: card
-        });
-        nodestream.emit('list', card);
-    });
-    res.redirect('/table');
 };
-exports.editCard = function (req, res) {
+exports.editCard = function (id, msg) {
     Card.findOne({
-        _id: req.params.id
+        _id: id
     }, function (err, card) {
         if (err) {
             console.log(err);
         } else {
-            card.text = req.body.msgText;
+            card.text = msg;
+            card.update_on = new Date();
             card.save();
         }
     });
-    res.redirect('/table');
+
 };
-exports.removeCard = function (req, res) {
+exports.removeCard = function (id) {
     Card.findOneAndRemove({
-        _id: req.params.id
+        _id: id
     }, function (err, card) {
         if (err) {
             throw err;
@@ -91,7 +73,6 @@ exports.removeCard = function (req, res) {
         console.log('Deleted card');
         console.log(card);
     });
-    res.redirect('/table');
 };
 
 exports.createDB = function () {
@@ -114,7 +95,3 @@ exports.createDB = function () {
         }
     });
 };
-
-function updatePage() {
-
-}

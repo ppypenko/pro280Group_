@@ -2,37 +2,45 @@ doctype
 html
     head
         link( rel='stylesheet', href='style.css')
+        link(rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+        script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         title= 'Card Database'
     body
-        h3 Cards against Humanity Data Table
-        //a(class='button', href='../logout') Logout
-        a(class='button', href='../create') Create
-        div(class='ctable')
-            h3 Cards against Humanity
-            table
-                thead
-                    tr
-                        th Id
-                        th Type
-                        th Text
-                        th Date Created
-                        th Date Updated
-                        th Edit
-                        th Delete
-                tbody
-                    each bc in card
+        div
+            h3 Cards against Humanity Data Table
+            //a(class='button', href='../logout') Logout
+        div
+            a(class='btn btn-primary', type='button', href='main') Home
+            a(class='button', href='../create') Create
+        div
+            div(class='ctable')
+                h3 Cards against Humanity
+                table
+                    thead
                         tr
-                            td
-                                |#{bc._id}
-                            td
-                                |#{bc.color}
-                            td
-                                |#{bc.text}
-                            td
-                                |#{bc.created_on.toString()}
-                            td
-                                |#{bc.update_on.toString()}
-                            td 
-                                a(href='/edit/#{bc._id.toString()}' ) Edit
-                            td
-                                a(href='/remove/#{bc._id.toString()}') Remove
+                            th Id
+                            th Type
+                            th Text
+                            th Date Created
+                            th Date Updated
+                            th Edit
+                            th Delete
+                    tbody
+                        each bc in card
+                            tr
+                                td
+                                    |#{bc._id}
+                                td
+                                    |#{bc.color}
+                                td
+                                    |#{bc.text}
+                                td
+                                    |#{bc.created_on.toString()}
+                                td
+                                    |#{bc.update_on.toString()}
+                                td 
+                                    a(href='/edit/#{bc._id.toString()}' ) Edit
+                                td
+                                    a(href='/remove/#{bc._id.toString()}') Remove
+                     
