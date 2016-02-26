@@ -12,6 +12,7 @@ html
             //a(class='button', href='../logout') Logout
         div
             a(class='btn btn-primary', type='button', href='main') Home
+            
             a(class='button', href='../create') Create
         div
             div(class='ctable')
@@ -27,6 +28,7 @@ html
                             th Edit
                             th Delete
                     tbody
+                        
                         each bc in card
                             tr
                                 td
@@ -43,4 +45,3 @@ html
                                     a(href='/edit/#{bc._id.toString()}' ) Edit
                                 td
                                     a(href='/remove/#{bc._id.toString()}') Remove
-                     

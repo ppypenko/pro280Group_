@@ -11,9 +11,8 @@ var express = require('express'),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
-exports.getApp = function () {
-    return app;
-};
+
+
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
@@ -26,6 +25,7 @@ app.use(expressSession({
 
 database.createDB();
 
+app.get('/index', route.mainPage);
 
 app.get('/table', function (req, res) {
     var d = database.cardTable();
@@ -35,6 +35,14 @@ app.get('/table', function (req, res) {
         });
     });
 });
+
+app.get('/login', route.loginPage);
+
+app.get('/signUp', route.signUpPage);
+
+app.get('/play', route.cardGamePage);
+
+//CRUD operations routes and actions
 app.get('/create', route.createCardPage);
 app.post('/create', urlParser, function (req, res) {
     database.createCard(req.body);
@@ -62,6 +70,6 @@ app.get('/remove/:id', function (req, res) {
 
 
 
+
 //-----------------last line of code below----------------------------
 app.listen(3000);
-//var io - require('socket.io').listen(app.listen(3000));
