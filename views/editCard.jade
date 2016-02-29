@@ -8,6 +8,17 @@ html
         title= 'Edit Card'
     body
         h3 Edit Card: #{card.id}
+        div(class="dropdown")
+            button(class="btn btn-primary", type="button")
+                a(href="../index") Home
+            span(class="caret")
+                button(class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown") CAH
+                    ul(class="dropdown-menu")
+                        li
+                            a(href='../play') Play
+                            a(href='../index') Discusions
+                            a(href='../create') New Card
+                            a(href='../table') All Cards
         form(id='form', method='post', action='/edit/#{card.id}')
             label(for='msg') Text
             br

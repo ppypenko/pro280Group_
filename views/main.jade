@@ -7,9 +7,22 @@ html
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         title= 'HomePage'
     body
-        h1 Cards against Humanity
         div
-            a(class='button', href='../logout') Login
+            h1 Cards against Humanity
+        div(class="dropdown")
+            button(class="btn btn-primary", type="button")
+                a(href="../index") Home
+            span(class="caret")
+                button(class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown") CAH
+                    ul(class="dropdown-menu")
+                        li
+                            a(href='../play') Play
+                            a(href='../index') Discusions
+                            a(href='../create') New Card
+                            a(href='../table') All Cards
+            
+        div
+            a(class='button btn-warning', href='../logout') Login
             a(class='button', href='../logout') Logout
             a(class='button', href='../logout') Logout
             a(class='button', href='../logout') Logout
