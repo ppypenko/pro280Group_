@@ -8,6 +8,17 @@ html
         title= 'Create Card'
     body
         h3 Create New Card
+        div
+            button(class="btn btn-secondary", type="button")
+                a(href="../index") Home
+                
+            div(class="btn-group")
+                button(class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") CAH
+                ul(class="dropdown-menu")
+                    li: a(href='../play') Play
+                    li: a(href='../index') Discusions
+                    li: a(href='../create') New Card
+                    li: a(href='../table') All Cards
         form(id='form', method='post', action='/create')
             label(for='colorType') Color Type
             br
