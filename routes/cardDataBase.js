@@ -1,6 +1,8 @@
 "use strict";
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    fs = require('fs');
 mongoose.connect('mongodb://localhost/data');
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -48,6 +50,7 @@ exports.createCard = function (body) {
             console.log(target);
         }
     });
+    return i;
 };
 exports.editCard = function (id, msg) {
     Card.findOne({
@@ -61,7 +64,6 @@ exports.editCard = function (id, msg) {
             card.save();
         }
     });
-
 };
 exports.removeCard = function (id) {
     Card.findOneAndRemove({

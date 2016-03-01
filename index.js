@@ -1,5 +1,6 @@
 "use strict";
-var express = require('express'),
+var http = require('http'),
+    express = require('express'),
     jade = require('jade'),
     path = require('path'),
     cookieParser = require('cookie-parser'),
@@ -8,6 +9,8 @@ var express = require('express'),
     app = express(),
     database = require('./routes/cardDataBase.js'),
     route = require('./routes/routes.js'),
+    server = http.createServer(app),
+    io = require('socket.io')(server),
     urlParser = bodyParser.urlencoded({
         extended: false
     });
@@ -45,8 +48,11 @@ app.get('/play', route.cardGamePage);
 //CRUD operations routes and actions
 app.get('/create', route.createCardPage);
 app.post('/create', urlParser, function (req, res) {
-    database.createCard(req.body);
+    var card = database.createCard(req.body);
     res.redirect('/table');
+    io.emit('newCard', {
+        card: card
+    });
 });
 app.get('/edit/:id', urlParser, function (req, res) {
     var d = database.editCardPage(req.params.id);
@@ -62,14 +68,19 @@ app.get('/edit/:id', urlParser, function (req, res) {
 app.post('/edit/:id', urlParser, function (req, res) {
     database.editCard(req.params.id, req.body.msgText);
     res.redirect('/table');
+    io.emit('editCard', {
+        id: req.params.id,
+        msg: req.body.msgText
+    });
 });
 app.get('/remove/:id', function (req, res) {
     database.removeCard(req.params.id);
     res.redirect('/table');
+    io.emit('removeCard', {
+        id: req.params.id
+    });
 });
 
 
-
-
 //-----------------last line of code below----------------------------
-app.listen(3000);
+server.listen(3000);
