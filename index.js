@@ -28,7 +28,7 @@ app.use(expressSession({
 
 database.createDB();
 
-app.get('/index', route.mainPage);
+app.get('/', route.mainPage);
 
 app.get('/table', function (req, res) {
     var d = database.cardTable();
