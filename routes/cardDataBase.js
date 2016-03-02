@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
     fs = require('fs');
 mongoose.connect('mongodb://localhost/data');
+const fs = require('fs');
 
 
 var db = mongoose.connection;

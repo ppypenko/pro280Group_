@@ -7,7 +7,8 @@ html
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         title='Register'
     body
-        h3 Login Page:
+        div
+            h1 Cards against Humanity
        div
             button(class="btn btn-secondary", type="button")
                 a(href="../") Home
@@ -19,6 +20,7 @@ html
                     li: a(href='../') Discusions
                     li: a(href='../create') New Card
                     li: a(href='../table') All Cards
+        h3 Login Page:
         form(method='post', action='/register')
             label(for='username') Username
             br
