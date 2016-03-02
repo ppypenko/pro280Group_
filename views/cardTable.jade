@@ -46,13 +46,26 @@ html
 
     body
         div
-            h3 Cards against Humanity Data Table
+            h1 Cards against Humanity
             //a(class='button', href='../logout') Logout
         div(id='test')            
         div
-            a(class='btn btn-primary', type='button', href='main') Home
-            
-            a(class='button', href='../create') Create
+            button(class="btn btn-secondary", type="button")
+                a(href="../index") Home
+                
+            div(class="btn-group")
+                button(class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") CAH
+                ul(class="dropdown-menu")
+                    li: a(href='../play') Play
+                    li: a(href='../index') Discusions
+                    li: a(href='../create') New Card
+                    li: a(href='../table') All Cards
+            button(class="btn btn-secondary")
+                a(href="../login") login
+            button(class="btn btn-secondary")
+                a(href="../signUp") sign up
+        div
+            h3 Cards against Humanity Data Table
         div
             div(class='ctable')
                 h3 Cards against Humanity

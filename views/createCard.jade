@@ -7,7 +7,8 @@ html
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         title= 'Create Card'
     body
-        h3 Create New Card
+        div
+            h1 Cards against Humanity
         div
             button(class="btn btn-secondary", type="button")
                 a(href="../index") Home
@@ -19,6 +20,11 @@ html
                     li: a(href='../index') Discusions
                     li: a(href='../create') New Card
                     li: a(href='../table') All Cards
+            button(class="btn btn-secondary")
+                a(href="../login") login
+            button(class="btn btn-secondary")
+                a(href="../signUp") sign up
+        h3 Create New Card
         form(id='form', method='post', action='/create')
             label(for='colorType') Color Type
             br

@@ -7,6 +7,19 @@ html
         script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         title='Login'
     body
+        div
+            h1 Cards against Humanity
+        div
+            button(class="btn btn-secondary", type="button")
+                a(href="../index") Home
+                
+            div(class="btn-group")
+                button(class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") CAH
+                ul(class="dropdown-menu")
+                    li: a(href='../play') Play
+                    li: a(href='../index') Discusions
+                    li: a(href='../create') New Card
+                    li: a(href='../table') All Cards
         h3 Login Page:
         form(method='post', action='/login')
             label(for='username') Username
