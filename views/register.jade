@@ -21,7 +21,8 @@ html
                     li: a(href='../create') New Card
                     li: a(href='../table') All Cards
         h3 Login Page:
-        form(method='post', action='/register')
+        h4 #{errorMsg}
+        form(id='form', method='post', action='/signUp')
             label(for='username') Username
             br
             input(name='username')
@@ -30,7 +31,7 @@ html
             br
             input(name='password', type='password')
             br
-            label(for='verify') Password
+            label(for='verify') Verify Password
             br
             input(name='verify', type='password')
             br

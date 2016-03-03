@@ -9,6 +9,7 @@ var http = require('http'),
     app = express(),
     database = require('./routes/cardDataBase.js'),
     route = require('./routes/routes.js'),
+    userDatabase = require('./routes/userData.js'),
     server = http.createServer(app),
     io = require('socket.io')(server),
     urlParser = bodyParser.urlencoded({
@@ -42,6 +43,29 @@ app.get('/table', function (req, res) {
 app.get('/login', route.loginPage);
 
 app.get('/signUp', route.signUpPage);
+app.post('/signUp', urlParser, function (req, res) {
+    var move = userDatabase.registerUser(req.body.username, req.body.password, req.body.verify);
+    switch (move) {
+    case 0:
+        res.redirect('/');
+        break;
+    case 1:
+        res.render('register', {
+            errorMsg: "Error! User already exists and passwords do not match."
+        });
+        break;
+    case 2:
+        res.render('register', {
+            errorMsg: "Error! User already exists."
+        });
+        break;
+    case 3:
+        res.render('register', {
+            errorMsg: "Error! Password and Verification do not match."
+        });
+        break;
+    }
+});
 
 app.get('/play', route.cardGamePage);
 
