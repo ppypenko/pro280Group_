@@ -1,1 +1,1 @@
-"C:\Program Files\MongoDB\Server\3.2\bin\mongod" --dbpath "C:\Users\Administrator\Documents\GitHub\pro280Group_\data"
+"C:\Program Files\MongoDB\Server\3.2\bin\mongod" --dbpath "C:\Users\BGonzalez\Documents\GitHub\pro280Group_\data"

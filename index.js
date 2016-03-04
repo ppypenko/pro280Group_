@@ -28,7 +28,14 @@ app.use(expressSession({
 
 database.createDB();
 
-app.get('/index', route.mainPage);
+app.get('/index', function (req, res) {
+    var bc = database.BlackCardArray();
+    bc.exec(function (err, card) {
+        res.render('main', {
+            
+        });
+    });
+});
 
 app.get('/table', function (req, res) {
     var d = database.cardTable();

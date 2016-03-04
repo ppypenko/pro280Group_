@@ -29,3 +29,20 @@ html
             a(class='button', href='../logout') Logout
             a(class='button', href='../logout') Logout
             a(class='button', href='../logout') Logout
+        div
+        each bc in card
+                            tr(id='#{bc._id.toString()}')
+                                td
+                                    |#{bc._id}
+                                td
+                                    |#{bc.color}
+                                td
+                                    |#{bc.text}
+                                td
+                                    |#{bc.created_on.toString()}
+                                td
+                                    |#{bc.update_on.toString()}
+                                td 
+                                    a(href='/edit/#{bc._id.toString()}' ) Edit
+                                td
+                                    a(href='/remove/#{bc._id.toString()}') Remove

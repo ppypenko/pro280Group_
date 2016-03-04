@@ -10,8 +10,7 @@ db.once('open', function(callback){
 });
 var userSchema = mongoose.Schema({
     UserName : String,
-    Password : String,
-    EmailAddress : String
+    Password : String
 });
 var User = mongoose.model('User', userSchema);
 

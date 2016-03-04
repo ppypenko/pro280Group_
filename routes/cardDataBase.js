@@ -27,6 +27,17 @@ exports.cardTable = function () {
     });
     return query;
 };
+exports.BlackCardArray = function(){
+    var blackQuery = Card.find({color : "Black"},function(err,Card){
+        if (err) {
+             console.log('no Black');
+             console.log(card);
+             throw err;
+         }
+    });
+    return blackQuery;
+};
+
 exports.editCardPage = function (id) {
     var query = Card.findOne({
         _id: id
