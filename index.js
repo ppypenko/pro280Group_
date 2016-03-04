@@ -26,11 +26,33 @@ app.use(expressSession({
     saveUninitialized: true,
     resave: true
 }));
+app.use(expressSession({
+    secret: "S3Cr3TM3zz3G3",
+    saveUninitialized: true,
+    resave: true
+}));
 
-database.createDB();
+var accessChecker = function (req, res, next) {
+    if (req.session.user && req.session.user.isAuthenticated) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+};
+
+//database.createDB();
 
 app.get('/', route.mainPage);
-
+app.get('/logout', function (req, res) {
+    req.session.destroy(function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("logged out");
+            res.redirect('/');
+        }
+    });
+});
 app.get('/table', function (req, res) {
     var d = database.cardTable();
     d.exec(function (err, card) {
@@ -41,44 +63,49 @@ app.get('/table', function (req, res) {
 });
 
 app.get('/login', route.loginPage);
+app.post('/login', urlParser, function (req, res) {
+    var move = userDatabase.loginUser(req.body.user, req.body.password);
+    if (move === "") {
+        req.session.user = {
+            isAuthenticated: true,
+            username: req.body.username
+        };
+        res.redirect('/');
+    } else {
+        res.render('login', {
+            errorMsg: move
+        });
+    }
+});
 
 app.get('/signUp', route.signUpPage);
 app.post('/signUp', urlParser, function (req, res) {
     var move = userDatabase.registerUser(req.body.username, req.body.password, req.body.verify);
-    switch (move) {
-    case 0:
+    if (move === "") {
+        req.session.user = {
+            isAuthenticated: true,
+            username: req.body.username
+        };
         res.redirect('/');
-        break;
-    case 1:
+    } else {
         res.render('register', {
-            errorMsg: "Error! User already exists and passwords do not match."
+            errorMsg: move
         });
-        break;
-    case 2:
-        res.render('register', {
-            errorMsg: "Error! User already exists."
-        });
-        break;
-    case 3:
-        res.render('register', {
-            errorMsg: "Error! Password and Verification do not match."
-        });
-        break;
     }
 });
 
 app.get('/play', route.cardGamePage);
 
-//CRUD operations routes and actions
-app.get('/create', route.createCardPage);
-app.post('/create', urlParser, function (req, res) {
+//---------------------CRUD operations routes and actions--------------------
+app.get('/create', accessChecker, route.createCardPage);
+app.post('/create', accessChecker, urlParser, function (req, res) {
     var card = database.createCard(req.body);
     res.redirect('/table');
     io.emit('newCard', {
         card: card
     });
 });
-app.get('/edit/:id', urlParser, function (req, res) {
+app.get('/edit/:id', accessChecker, urlParser, function (req, res) {
     var d = database.editCardPage(req.params.id);
     d.exec(function (err, found) {
         res.render('editCard', {
@@ -89,7 +116,7 @@ app.get('/edit/:id', urlParser, function (req, res) {
         });
     });
 });
-app.post('/edit/:id', urlParser, function (req, res) {
+app.post('/edit/:id', accessChecker, urlParser, function (req, res) {
     database.editCard(req.params.id, req.body.msgText);
     res.redirect('/table');
     io.emit('editCard', {
@@ -97,7 +124,7 @@ app.post('/edit/:id', urlParser, function (req, res) {
         msg: req.body.msgText
     });
 });
-app.get('/remove/:id', function (req, res) {
+app.get('/remove/:id', accessChecker, function (req, res) {
     database.removeCard(req.params.id);
     res.redirect('/table');
     io.emit('removeCard', {

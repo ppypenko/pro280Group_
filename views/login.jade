@@ -11,7 +11,7 @@ html
             h1 Cards against Humanity
         div
             button(class="btn btn-secondary", type="button")
-                a(href="../index") Home
+                a(href="../") Home
                 
             div(class="btn-group")
                 button(class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") CAH
@@ -21,13 +21,14 @@ html
                     li: a(href='../create') New Card
                     li: a(href='../table') All Cards
         h3 Login Page:
+        h4 #{errorMsg}
         form(method='post', action='/login')
             label(for='username') Username
             br
-            input(id='username')
+            input(id='username', name='user')
             br
-            label(for='password') Password
+            label(for='userpassword') Password
             br
-            input(id='password', type='text')
+            input(id='userpassword', type='text', name='password')
             br
             input(type='submit', value='Login')

@@ -17,13 +17,11 @@ var User = mongoose.model('User', userSchema);
 //--------------------inner functions---------------------------
 
 function checkIfUserAlreadyExists(user) {
-    var e;
     User.findOne({
         UserName: user
     }).lean().exec(function (err, item) {
-        e = item;
+        return item;
     });
-    return e !== null;
 }
 
 function deleteUsers() {
@@ -35,16 +33,42 @@ function deleteUsers() {
     });
 }
 
+function findUser(user) {
+    User.findOne({
+        UserName: user
+    }).lean().exec(function (err, item) {
+        return item;
+    });
+}
+
+function findPassword(user, password) {
+    User.findOne({
+        UserName: user,
+        Password: password
+    }).lean().exec(function (err, item) {
+        return item;
+    });
+}
 
 //------------------------exported functions--------------------------
+exports.loginUser = function (user, password) {
+    console.log(findUser(user));
+    if (findUser(user) === null) {
+        return "Error! User does not exist.";
+    } else if (findPassword(user, password) === null) {
+        return "Error! Password incorrect.";
+    } else {
+        return "";
+    }
+};
 
 exports.registerUser = function (username, password, verify) {
-    if (checkIfUserAlreadyExists(username) && password !== verify) {
-        return 1;
-    } else if (checkIfUserAlreadyExists(username)) {
-        return 2;
+    if (checkIfUserAlreadyExists(username) !== "" && password !== verify) {
+        return "Error! User already exists. Error! Password and Verification do not match.";
+    } else if (checkIfUserAlreadyExists(username) !== "") {
+        return "Error! User already exists.";
     } else if (password !== verify) {
-        return 3;
+        return "Error! Password and Verification do not match.";
     } else {
         var i = new User({
             UserName: username,
@@ -57,7 +81,7 @@ exports.registerUser = function (username, password, verify) {
                 console.log(target);
             }
         });
-        return 0;
+        return "";
     }
 };
 exports.editUser = function (userName) {
