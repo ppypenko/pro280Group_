@@ -16,7 +16,7 @@ var http = require('http'),
         extended: false
     });
 
-
+userDatabase.getAllUsers();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));

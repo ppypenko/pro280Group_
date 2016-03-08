@@ -1,7 +1,7 @@
 "use strict";
 var mongoose = require('mongoose');
 mongoose.createConnection('mongodb://localhost/data');
-var fs = require('fs');
+var usersArray = [];
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -15,12 +15,18 @@ var userSchema = mongoose.Schema({
 var User = mongoose.model('User', userSchema);
 
 //--------------------inner functions---------------------------
+exports.getAllUsers = function () {
+    populateArray();
+};
 
-function checkIfUserAlreadyExists(user) {
-    User.findOne({
-        UserName: user
-    }).lean().exec(function (err, item) {
-        return item;
+function populateArray() {
+    var q = User.find({}),
+        array = [];
+    q.exec(function (err, users) {
+        if (err) {
+            console.log(err);
+        }
+        usersArray = users;
     });
 }
 
@@ -31,31 +37,29 @@ function deleteUsers() {
     User.find(function (err, users) {
         console.log(users);
     });
+    populateArray();
 }
 
 function findUser(user) {
-    User.findOne({
-        UserName: user
-    }).lean().exec(function (err, item) {
-        return item;
-    });
+    var i = 0;
+    for (i = 0; i < usersArray.length; i += 1) {
+        return (usersArray[i].UserName === user) ? true : false;
+    }
 }
 
 function findPassword(user, password) {
-    User.findOne({
-        UserName: user,
-        Password: password
-    }).lean().exec(function (err, item) {
-        return item;
-    });
+    var i = 0;
+    for (i = 0; i < usersArray.length; i += 1) {
+        return (usersArray[i].UserName === user && usersArray[i].Password === password) ? true : false;
+    }
 }
 
 //------------------------exported functions--------------------------
 exports.loginUser = function (user, password) {
     console.log(findUser(user));
-    if (findUser(user) === null) {
+    if (!findUser(user)) {
         return "Error! User does not exist.";
-    } else if (findPassword(user, password) === null) {
+    } else if (!findPassword(user, password)) {
         return "Error! Password incorrect.";
     } else {
         return "";
@@ -63,9 +67,9 @@ exports.loginUser = function (user, password) {
 };
 
 exports.registerUser = function (username, password, verify) {
-    if (checkIfUserAlreadyExists(username) !== "" && password !== verify) {
+    if (!findUser(username) && password !== verify) {
         return "Error! User already exists. Error! Password and Verification do not match.";
-    } else if (checkIfUserAlreadyExists(username) !== "") {
+    } else if (!findUser(username)) {
         return "Error! User already exists.";
     } else if (password !== verify) {
         return "Error! Password and Verification do not match.";
@@ -81,9 +85,11 @@ exports.registerUser = function (username, password, verify) {
                 console.log(target);
             }
         });
+        populateArray();
         return "";
     }
 };
+
 exports.editUser = function (userName) {
     var query = User.findOne({
         _id: userName
@@ -92,6 +98,7 @@ exports.editUser = function (userName) {
             console.error(err);
         }
     });
+    populateArray();
     return query;
 };
 exports.removeUser = function (id) {
@@ -104,4 +111,5 @@ exports.removeUser = function (id) {
         console.log('Deleted user');
         console.log(user);
     });
+    populateArray();
 };
