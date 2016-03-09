@@ -1,8 +1,9 @@
 "use strict";
 var mongoose = require('mongoose'),
-    fs = require('fs');
+    fs = require('fs'),
+    blackCards = [],
+    whiteCards = [];
 mongoose.connect('mongodb://localhost/data');
-
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -17,6 +18,43 @@ var cardSchema = mongoose.Schema({
 });
 
 var Card = mongoose.model('Card', cardSchema);
+//--------------------inner functions----------------------------------
+
+function getCard(color) {
+    var i = 0;
+    if (color === "Black") {
+        i = Math.floor((Math.random() * blackCards.length));
+        return blackCards[i];
+    } else if (color === "White") {
+        i = Math.floor((Math.random() * whiteCards.length));
+        return whiteCards[i];
+    }
+    return "";
+}
+
+//--------------------exported functions--------------------------------
+
+exports.getWhiteCard = function () {
+    return getCard("White");
+};
+exports.getBlackCard = function () {
+    return getCard("Black");
+};
+
+exports.startGame = function () {
+    var black = Card.find({
+            color: "Black"
+        }),
+        white = Card.find({
+            color: "White"
+        });
+    black.exec(function (err, cards) {
+        blackCards = cards;
+        white.exec(function (err, cards) {
+            whiteCards = cards;
+        });
+    });
+};
 
 exports.cardTable = function () {
     var query = Card.find(function (err, card) {

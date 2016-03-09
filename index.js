@@ -16,7 +16,6 @@ var http = require('http'),
         extended: false
     });
 
-userDatabase.getAllUsers();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
@@ -41,7 +40,7 @@ var accessChecker = function (req, res, next) {
 };
 
 //database.createDB();
-
+database.startGame();
 app.get('/', route.mainPage);
 app.get('/logout', function (req, res) {
     req.session.destroy(function (err) {
