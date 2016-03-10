@@ -10,6 +10,7 @@ var http = require('http'),
     database = require('./routes/cardDataBase.js'),
     route = require('./routes/routes.js'),
     userDatabase = require('./routes/userData.js'),
+    pi = require('./routes/PI.js'),
     server = http.createServer(app),
     io = require('socket.io')(server),
     urlParser = bodyParser.urlencoded({
@@ -41,7 +42,13 @@ var accessChecker = function (req, res, next) {
 
 //database.createDB();
 database.startGame();
-app.get('/', route.mainPage);
+app.get('/', function (req, res) {
+    var piValue = pi.PI(500).toString().substring(0, 102);
+    //console.log(piValue.toString());
+    res.render('main', {
+        PI: piValue
+    });
+});
 app.get('/logout', function (req, res) {
     req.session.destroy(function (err) {
         if (err) {

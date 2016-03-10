@@ -3,9 +3,6 @@
 exports.cardTablePage = function (req, res) {
     res.render('cardTable');
 };
-exports.mainPage = function (req, res) {
-    res.render('main');
-};
 
 exports.signUpPage = function (req, res) {
     res.render('register');
