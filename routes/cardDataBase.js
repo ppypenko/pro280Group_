@@ -24,10 +24,10 @@ function getCard(color) {
     var i = 0;
     if (color === "Black") {
         i = Math.floor((Math.random() * blackCards.length));
-        return blackCards[i];
+        return blackCards.splice(i, 1);
     } else if (color === "White") {
         i = Math.floor((Math.random() * whiteCards.length));
-        return whiteCards[i];
+        return whiteCards.splice(i, 1);
     }
     return "";
 }

@@ -43,7 +43,8 @@ var accessChecker = function (req, res, next) {
 //database.createDB();
 database.startGame();
 app.get('/', function (req, res) {
-    var piValue = pi.PI(500).toString().substring(0, 102);
+    console.log(database.getWhiteCard());
+    var piValue = pi.PI(120).toString().substring(0, 102);
     //console.log(piValue.toString());
     res.render('main', {
         PI: piValue

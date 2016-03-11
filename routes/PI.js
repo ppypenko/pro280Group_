@@ -1,17 +1,17 @@
 "use strict";
 var Decimal = require('decimal.js');
 
+function factorial(n) {
+    var i = 1,
+        r = new Decimal(1);
+
+    for (i = 1; i <= n; i += 1) {
+        r = r.times(i);
+    }
+    return r;
+}
 exports.PI = function (digits) {
     Decimal.precision = digits + 2;
-
-    function factorial(n) {
-        var i = 2,
-            r = new Decimal(1);
-        for (i = 2; i <= n; i += 1) {
-            r = r.times(i + 1);
-        }
-        return r;
-    }
 
     // The number of decimal digits the algorithm generates per iteration.
     var digits_per_iteration = 14.1816474627254776555,
