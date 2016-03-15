@@ -101,7 +101,33 @@ app.post('/signUp', urlParser, function (req, res) {
     }
 });
 
-app.get('/play', route.cardGamePage);
+app.get('/play', function(req, res){
+    var d = database.getBlackCard();
+    var w = [],card;
+    for(var i = 0; i < 5; i += 1){
+        card = database.getWhiteCard();
+        w.push(card[0]);
+    };
+//    console.log(d);
+    res.render("cardGame", {
+        card: d,
+        hand: w
+    });
+});
+app.post('/play', urlParser, function(req, res){
+    var d = database.getBlackCard();
+    var hand = req.body.cardNum.whiteCard;
+    console.log(hand);
+    var w = [],card;
+    for(var i = 0; i < 5; i += 1){
+        card = database.getWhiteCard();
+        w.push(card[0]);
+    };
+    res.render("cardGame", {
+        card: d,
+        hand: w
+    });
+});
 
 //---------------------CRUD operations routes and actions--------------------
 app.get('/create', accessChecker, route.createCardPage);

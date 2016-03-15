@@ -1,0 +1,43 @@
+doctype
+html
+    head
+        link( rel='stylesheet', href='style.css')
+        link(rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+        script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
+        title= 'Board'
+    body
+        div
+            h1 Cards against Humanity
+        //a(class='button', href='../logout') Logout           
+        div
+            a(class='btn btn-primary', type='button', href="../") Home
+
+        div(class="btn-group")
+            button(class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") CAH
+            ul(class="dropdown-menu")
+                li: a(href='../play') Play
+                li: a(href='../index') Discusions
+                li: a(href='../create') New Card
+                li: a(href='../table') All Cards
+            button(class="btn btn-secondary")
+                a(href="../login") login
+            button(class="btn btn-secondary")
+                a(href="../signUp") sign up
+        div
+            h3 Cards against Humanity Game Board
+        div
+             
+            //-var card = hand[0]
+            form(id='form', method='post', action='/play')
+                each bc in card
+                    h4(name="currentPlayCard", id="blackCrad") #{bc.text}
+                label(for='cardPlay') Hand
+                br
+                select(name='cardNum', id='CardPlace')
+                    each wc, val in hand
+                        option(value=(val + 1), name="whiteCard") #{wc.text}
+                br
+                input(type='submit', value='Play')
+            //each wc, val in hand
+                p= (val + 1) + ': ' + wc.text
